@@ -21,8 +21,17 @@ type AmbulanceConditionsAPI interface {
    // internal registration of api routes
    addRoutes(routerGroup *gin.RouterGroup)
 
+    // CreateCondition - Saves new condition into ambulance
+   CreateCondition(ctx *gin.Context)
+
+    // DeleteCondition - Deletes specific condition
+   DeleteCondition(ctx *gin.Context)
+
     // GetConditions - Provides the list of conditions associated with ambulance
    GetConditions(ctx *gin.Context)
+
+    // UpdateCondition - Updates specific condition
+   UpdateCondition(ctx *gin.Context)
 
  }
 
@@ -36,12 +45,30 @@ func newAmbulanceConditionsAPI() AmbulanceConditionsAPI {
 }
 
 func (this *implAmbulanceConditionsAPI) addRoutes(routerGroup *gin.RouterGroup) {
+  routerGroup.Handle( http.MethodPost, "/waiting-list/:ambulanceId/condition", this.CreateCondition)
+  routerGroup.Handle( http.MethodDelete, "/waiting-list/:ambulanceId/condition", this.DeleteCondition)
   routerGroup.Handle( http.MethodGet, "/waiting-list/:ambulanceId/condition", this.GetConditions)
+  routerGroup.Handle( http.MethodPut, "/waiting-list/:ambulanceId/condition", this.UpdateCondition)
 }
 
 // Copy following section to separate file, uncomment, and implement accordingly
+// // CreateCondition - Saves new condition into ambulance
+// func (this *implAmbulanceConditionsAPI) CreateCondition(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+// // DeleteCondition - Deletes specific condition
+// func (this *implAmbulanceConditionsAPI) DeleteCondition(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
 // // GetConditions - Provides the list of conditions associated with ambulance
 // func (this *implAmbulanceConditionsAPI) GetConditions(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+// // UpdateCondition - Updates specific condition
+// func (this *implAmbulanceConditionsAPI) UpdateCondition(ctx *gin.Context) {
 //  	ctx.AbortWithStatus(http.StatusNotImplemented)
 // }
 //

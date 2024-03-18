@@ -221,6 +221,119 @@ paths:
                   $ref: "#/components/examples/ConditionsListExample"
         "404":
           description: Ambulance with such ID does not exists
+    post:
+      tags:
+        - ambulanceConditions
+      summary: Saves new condition into ambulance
+      operationId: createCondition
+      description: Use this method to store new condition into the ambulance.
+      parameters:
+        - in: path
+          name: ambulanceId
+          description: pass the id of the particular ambulance
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Condition"
+            examples:
+              request-sample:
+                $ref: "#/components/examples/ConditionExample"
+        description: Condition to store
+        required: true
+      responses:
+        "200":
+          description: >-
+            Value of the condition with re-computed estimated time of ambulance
+            entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Condition"
+              examples:
+                updated-response:
+                  $ref: "#/components/examples/ConditionExample"
+        "400":
+          description: Missing mandatory properties of input object.
+        "404":
+          description: Ambulance with such ID does not exists
+        "409":
+          description: Entry with the specified id already exists
+    put:
+      tags:
+        - ambulanceConditions
+      summary: Updates specific condition
+      operationId: updateCondition
+      description: Use this method to update content of the condition in the ambulance.
+      parameters:
+        - in: path
+          name: ambulanceId
+          description: pass the id of the particular ambulance
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: conditionId
+          description: pass the id of the particular condition in the ambulance
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Condition"
+            examples:
+              request:
+                $ref: "#/components/examples/ConditionExample"
+        description: Condition to update
+        required: true
+      responses:
+        "200":
+          description: >-
+            value of the condition with re-computed estimated time of ambulance
+            entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Condition"
+              examples:
+                response:
+                  $ref: "#/components/examples/ConditionExample"
+        "403":
+          description: >-
+            Value of the conditionID and the data id is mismatching. Details are
+            provided in the response body.
+        "404":
+          description: Ambulance or Condition with such ID does not exists
+    delete:
+      tags:
+        - ambulanceConditions
+      summary: Deletes specific condition
+      operationId: deleteCondition
+      description: Use this method to delete the specific condition from the ambulance.
+      parameters:
+        - in: path
+          name: ambulanceId
+          description: pass the id of the particular ambulance
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: conditionId
+          description: pass the id of the particular condition in the ambulance
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Item deleted
+        "404":
+          description: Ambulance or Condition with such ID does not exists
+
   "/ambulance":
     post:
       tags:
@@ -254,6 +367,72 @@ paths:
         "409":
           description: Entry with the specified id already exists
   "/ambulance/{ambulanceId}":
+    get:
+      tags:
+        - ambulances
+      summary: Provides details about ambulance
+      operationId: getAmbulance
+      description: >-
+        By using ambulanceId you can get details about ambulance
+      parameters:
+      - in: path
+        name: ambulanceId
+        description: pass the id of the particular ambulance
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: value of the ambulance
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ambulance"
+              examples:
+                response:
+                  $ref: "#/components/examples/AmbulanceExample"
+        "404":
+          description: Ambulance with such ID does not exist
+    put:
+      tags:
+        - ambulances
+      summary: Updates specific ambulance
+      operationId: updateAmbulance
+      description: Use this method to update content of the ambulance.
+      parameters:
+        - in: path
+          name: ambulanceId
+          description: pass the id of the particular ambulance
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Ambulance"
+            examples:
+              request:
+                $ref: "#/components/examples/AmbulanceExample"
+        description: Ambulance to update
+        required: true
+      responses:
+        "200":
+          description: >-
+            value of the ambulance
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ambulance"
+              examples:
+                response:
+                  $ref: "#/components/examples/AmbulanceExample"
+        "403":
+          description: >-
+            Value of the ambulanceID and the data id is mismatching. Details are
+            provided in the response body.
+        "404":
+          description: Ambulance with such ID does not exist
     delete:
       tags:
         - ambulances
